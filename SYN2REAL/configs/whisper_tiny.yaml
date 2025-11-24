@@ -9,9 +9,10 @@ weight_decay: 0.1
 run_name: 
 warmup_steps: 500
 max_steps:
-gradient_checkpointing: True
+gradient_checkpointing: False
 fp16: True
-evaluation_strategy: "steps"
+eval_strategy: "steps"
+save_strategy : "steps"
 per_device_eval_batch_size: 8
 predict_with_generate: True
 generation_max_length: 225

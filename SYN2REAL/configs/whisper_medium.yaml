@@ -2,8 +2,8 @@ do_train: True
 overwrite_output_dir: True
 do_eval: True
 output_dir:   # change to a repo name of your choice
-per_device_train_batch_size: 16
-gradient_accumulation_steps: 1  # increase by 2x for every 2x decrease in batch size
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8  # increase by 2x for every 2x decrease in batch size
 learning_rate: 1.e-5
 run_name: 
 warmup_steps: 500
@@ -12,9 +12,10 @@ gradient_checkpointing: False
 fp16: True
 eval_strategy: "steps"
 save_strategy : "steps"
-per_device_eval_batch_size: 8
+per_device_eval_batch_size: 2
+eval_accumulation_steps: 4
 predict_with_generate: True
-generation_max_length: 225
+generation_max_length: 128
 save_steps: 50
 eval_steps: 50
 logging_steps: 25
