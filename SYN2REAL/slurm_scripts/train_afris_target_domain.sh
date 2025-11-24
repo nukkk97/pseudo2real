@@ -1,0 +1,17 @@
+# - Fold 0: yoruba, ijaw, afrikaans, idoma, setswana (total samples: 23,365)
+# - Fold 1: igbo, swahili, hausa, zulu, twi (total samples: 24,067)
+
+DOMAINS=("igbo")
+# DOMAINS="yoruba;ijaw;afrikaans;idoma;setswana"
+
+for domain in "${DOMAINS[@]}"; do
+ python train_afris_custom.py \
+   --domains "$domain" \
+   --model_path "/work/u3359154/syn2real/SYN2REAL/outputs/whisper_afris_mixed_fold-0_cluster-0-of-1_tiny_to_tiny" \
+   --synth_text "text_whisper-tiny" \
+   --configs "/work/u3359154/syn2real/SYN2REAL/configs/whisper_tiny.yaml" \
+   --syn True \
+   --fold 0 \
+   --cluster 1 \
+   --current_pseudo 0
+done
