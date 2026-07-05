@@ -1,6 +1,6 @@
 # Pseudo2Real: Task Arithmetic for Pseudo-Label Correction in Automatic Speech Recognition
 
-This repository provides two scripts implementing the **Pseudo2Real** parameter-space correction method for fine-tuning and evaluating Whisper ASR models on the multi-accent [AfriSpeech-200](https://huggingface.co/datasets/dlion168/afrispeech200_syn2real) benchmark.
+This repository provides the implementation of the **Pseudo2Real** parameter-space correction method for fine-tuning and evaluating Whisper ASR models on the multi-accent [AfriSpeech-200](https://huggingface.co/datasets/dlion168/afrispeech200_syn2real) benchmark.
 
 ## Contents
 
