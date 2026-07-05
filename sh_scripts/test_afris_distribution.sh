@@ -1,12 +1,12 @@
 #!/bin/bash
 # Path to test.py
-SCRIPT="/work/u3359154/syn2real/SYN2REAL/test_afris_distribution.py"
+SCRIPT="/work/u3359154/pseudo2real/test_afris_distribution.py"
 
 # Pre-calculated source domain vector
-VECTOR="/work/u3359154/syn2real/SYN2REAL/outputs/whisper_afris_diff_average_tiny2tiny.safetensors"
+VECTOR="/work/u3359154/pseudo2real/outputs/whisper_afris_diff_average_tiny2tiny.safetensors"
 
 # Path to target domain synth models directory
-MODEL_DIR="/work/u3359154/syn2real/SYN2REAL/outputs/tiny2tiny"
+MODEL_DIR="/work/u3359154/pseudo2real/outputs/tiny2tiny"
 
 # List of weights to try
 WEIGHTS=(0.0)
@@ -25,6 +25,6 @@ for MODEL_PATH in "$MODEL_DIR"/*; do
             --model_vector "$VECTOR" \
             --domain "$DOMAIN" \
             --weight "$WEIGHT" \
-            --output_name "/work/u3359154/syn2real/SYN2REAL/outputs/distribution_tinytiny.txt"
+            --output_name "/work/u3359154/pseudo2real/outputs/distribution_tinytiny.txt"
     done
 done

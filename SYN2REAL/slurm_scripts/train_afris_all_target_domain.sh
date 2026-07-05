@@ -1,2 +1,0 @@
-bash /work/u3359154/syn2real/SYN2REAL/slurm_scripts/train_afris_mixed_large_to_small.sh
-bash /work/u3359154/syn2real/SYN2REAL/slurm_scripts/train_afris_target_domain_large_to_small.sh

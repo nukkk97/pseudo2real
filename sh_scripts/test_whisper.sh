@@ -1,4 +1,4 @@
-SCRIPT="/work/u3359154/syn2real/SYN2REAL/test_afris.py"
+SCRIPT="/work/u3359154/pseudo2real/test_afris.py"
 MODEL_DIR="openai/whisper-medium"
 DOMAINS="hausa;igbo;swahili;twi;zulu"
 
@@ -10,5 +10,5 @@ for DOMAIN in "${DOMAIN_ARRAY[@]}"; do
     python "$SCRIPT" \
         --model_path "$MODEL_DIR" \
         --domain "$DOMAIN" \
-        --output_name "/work/u3359154/syn2real/SYN2REAL/outputs/whisper_medium.txt"
+        --output_name "/work/u3359154/pseudo2real/outputs/whisper_medium.txt"
 done

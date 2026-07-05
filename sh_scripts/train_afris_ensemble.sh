@@ -13,7 +13,7 @@ for pseudo in {0..1}; do
   cluster=2
 
   # syn=True
-  CUDA_VISIBLE_DEVICES=0 python train_afris_custom2.py \
+  CUDA_VISIBLE_DEVICES=0 python train_afris_custom.py \
     --domains "$DOMAINS" \
     --model_path "openai/whisper-small" \
     --synth_text "text_whisper-medium" \
@@ -23,7 +23,7 @@ for pseudo in {0..1}; do
     --current_pseudo "$pseudo"
 
   # syn=False
-  CUDA_VISIBLE_DEVICES=0 python train_afris_custom2.py \
+  CUDA_VISIBLE_DEVICES=0 python train_afris_custom.py \
     --domains "$DOMAINS" \
     --model_path "openai/whisper-small" \
     --synth_text "text_whisper-medium" \

@@ -10,7 +10,7 @@ for domain in $DOMAINS; do
       --domains "$domain" \
       --model_path "openai/whisper-tiny" \
       --synth_text "text_whisper-tiny" \
-      --configs "/work/u3359154/syn2real/SYN2REAL/configs/whisper_tiny.yaml" \
+      --configs "/work/u3359154/pseudo2real/configs/whisper_tiny.yaml" \
       --syn True \
       --fold 0 \
       --cluster 1 \
@@ -20,7 +20,7 @@ for domain in $DOMAINS; do
       --domains "$domain" \
       --model_path "openai/whisper-tiny" \
       --synth_text "text_whisper-tiny" \
-      --configs "/work/u3359154/syn2real/SYN2REAL/configs/whisper_tiny.yaml" \
+      --configs "/work/u3359154/pseudo2real/configs/whisper_tiny.yaml" \
       --syn False \
       --fold 0 \
       --cluster 1 \

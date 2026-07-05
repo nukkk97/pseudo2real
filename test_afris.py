@@ -1,4 +1,4 @@
-from datasets import load_dataset
+from datasets import load_dataset, Audio
 from transformers import WhisperForConditionalGeneration, WhisperProcessor
 import torch
 from evaluate import load
@@ -8,10 +8,11 @@ from safetensors.torch import load_file as load_safetensors
 def map_to_pred(batch):
     audio = batch["audio"]
     input_features = processor(audio["array"], sampling_rate=audio["sampling_rate"], return_tensors="pt").input_features
-    batch["reference"] = processor.tokenizer._normalize(batch['text'])
+    batch["reference"] = processor.tokenizer._normalize(batch['transcript'])  # Use 'transcript' for the Afrispeech dataset
 
     with torch.no_grad():
-        predicted_ids = model.generate(input_features.to("cuda"))[0]
+        forced_decoder_ids = processor.get_decoder_prompt_ids(language="en", task="translate")
+        predicted_ids = model.generate(input_features.to("cuda"), forced_decoder_ids=forced_decoder_ids)[0]
     transcription = processor.decode(predicted_ids, skip_special_tokens=False)
     batch["prediction"] = processor.tokenizer._normalize(transcription)
     return batch
@@ -32,19 +33,21 @@ def merge(model_syn_anti, model_anti, model_target_syn, vector_dict, args):
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('--model_path', type=str, default=None)
-    parser.add_argument('--model_syn_anti', type=str, default=None)
-    parser.add_argument('--model_anti', type=str, default=None)
-    parser.add_argument('--model_target_syn', type=str, default=None)
-    parser.add_argument('--model_vector', type=str, default=None)
-    parser.add_argument('--domain', nargs='+', type=str, default=None)
-    parser.add_argument('--weight', type=float, default=1.0)
+    parser.add_argument('--model_path', type=str, default=None) # base model (not used when merging, only usable in vanilla mode)
+    parser.add_argument('--model_syn_anti', type=str, default=None) # source domain synth model
+    parser.add_argument('--model_anti', type=str, default=None) # source domain real model
+    parser.add_argument('--model_target_syn', type=str, default=None) # target domain synth model
+    parser.add_argument('--model_vector', type=str, default=None) # pre-calculated source domain syn2real vector
+    parser.add_argument('--domain', nargs='+', type=str, default=None) # target domain
+    parser.add_argument('--weight', type=float, default=1.0) # merging weight 0.0-1.0
+    parser.add_argument('--output_name', type=str, default='result.txt') # output name
     args = parser.parse_args()
 
     # Load dataset
-    dataset = load_dataset("caster97/slurp_clustered_dataset", split="real_te")
+    dataset = load_dataset("dlion168/afrispeech200_syn2real", split="test")
+    dataset = dataset.cast_column("audio", Audio(sampling_rate=16000))
     if args.domain is not None:
-        dataset = dataset.filter(lambda example: example["scenario"] in args.domain)
+        dataset = dataset.filter(lambda example: example["accent"] in args.domain)
 
     # Model loading logic
     if all(x is None for x in [args.model_syn_anti, args.model_anti, args.model_target_syn, args.model_vector]):
@@ -79,4 +82,5 @@ if __name__ == '__main__':
     model.config.forced_decoder_ids = None
     result = dataset.map(map_to_pred)
     wer = load("wer")
-    print(args.model_path, 100 * wer.compute(references=result["text"], predictions=result["prediction"]))
+    with open(f"{args.output_name}", "a", encoding="utf-8") as f:
+        f.write(f"{args.domain} {args.weight} {100 * wer.compute(references=result['transcript'], predictions=result['prediction']):.2f}\n")

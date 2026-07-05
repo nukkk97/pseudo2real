@@ -1,7 +1,7 @@
 # - Fold 0: yoruba, ijaw, afrikaans, idoma, setswana (total samples: 23,365)
 # - Fold 1: igbo, swahili, hausa, zulu, twi (total samples: 24,067)
 
-DOMAINS=("afrikaans" "idoma" "setswana")
+DOMAINS=("afrikaans" "idoma" "setswana" "yoruba" "ijaw")
 #DOMAINS="yoruba;ijaw;afrikaans;idoma;setswana"
 
 for domain in "${DOMAINS[@]}"; do

@@ -1,12 +1,12 @@
 #!/bin/bash
 # Path to test.py
-SCRIPT="/work/u3359154/syn2real/SYN2REAL/test.py"
+SCRIPT="/work/u3359154/pseudo2real/test.py"
 
 # Pre-calculated source domain vector
-VECTOR="/work/u3359154/syn2real/SYN2REAL/outputs/16clusters_fold1/synth2real_fold-0_LOO-exclude0.safetensors"
+VECTOR="/work/u3359154/pseudo2real/outputs/16clusters_fold1/synth2real_fold-0_LOO-exclude0.safetensors"
 
 # Path to target domain synth models directory
-MODEL_DIR="/work/u3359154/syn2real/SYN2REAL/outputs/test"
+MODEL_DIR="/work/u3359154/pseudo2real/outputs/test"
 
 # List of weights to try
 WEIGHTS=(0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0)
